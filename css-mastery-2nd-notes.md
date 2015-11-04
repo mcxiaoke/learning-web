@@ -314,22 +314,99 @@ overflow属性定义在包含的内容对于指定的尺寸太大的情况下元
 
 # 第4章 背景图像效果
 
-2015.11.03 p68
+## 4.1 背景图像基础
 
+    body {
+        background-image: url(/img/pattern.gif)
+    }
 
+默认情况下，浏览器水平和垂直地重复显示背景图像，让图像平铺在整个页面上。可以选择背景图像是垂直平铺、水平平铺，还是根本不平铺。
 
+    body {
+        background-image: url(/img/gradient.gif)
+        background-repeat: repeat-x;
+        background-color: #ccc;
+    }
 
+品牌图像背景示例：
 
+	#branding {
+    	width: 700px;
+        height: 200px;
+        background-image: url(/img/branding.gif);
+        background-repeat: no-repeat;
+    }
 
+使用背景图像创建项目符号：
 
+	h1 {
+    	padding-left: 30px;
+        background-image: url(/img/bullet.gif);
+        background-repeat: no-repeat;
+        background-position: left center;
+    }
 
+如果使用像素设置背景位置，那么图像左上角到元素左上角的距离为指定的像素数。但是，使用百分比进行背景定位的工作方式不太一样。百分数定位并不对背景图像的左上角进行定位，而是使用图像上的一个点。例如，如果指定垂直和水平位置都是20%，实际上是将图像上距离左上角20%的点定位到父元素上距离左上角20%的位置。
 
+background属性的简写方式：
 
+	h1 {
+    	background: #ccc url(/img/bullet.gif) no-repeat left center;
+    }
 
+## 4.2 圆角框
 
+创建圆角框由很多种方式
 
+### 4.2.1 固定宽度的圆角框
 
+使用GIF背景的方式需要4个图像：两个顶部图像组成的顶部曲线，两个底部图像组成底部曲线和框的主体。
 
+### 4.2.2 山顶角(Mountaintop corners)
+
+不用创建有颜色的角图像，而是创建曲线形的位图角模板。这种方法只适合创建非常简单的框，但是非常灵活，便于复用。
+
+#### 1. 多个背景图像
+
+可以定义多个背景图像，使用CSS3实现。
+
+    .box { background-image: url(/img/top-left.gif),
+        url(/img/top-right.gif),
+        url(/img/bottom-left.gif),
+        url(/img/bottom-right.gif);
+    background-repeat: no-repeat,
+        no-repeat,
+        no-repeat,
+        no-repeat;
+    background-position: top left,
+        top right,
+        bottom left,
+        bottom right;
+    }
+
+    <div class="box">
+        <h2>Headline</h2>
+        <p>Content<p>
+    </div>
+
+#### 2. border-radius
+
+直接使用CSS3的border-radius属性就可以实现圆角：
+
+	.box {
+    	border-radius: 1em;
+    }
+
+#### 3. border-image
+
+这也是CSS3的新属性。它允许指定一个图像作为元素的边框。这个属性的优点是，可以根据一些简单的百分比规则把图像划分为9个区域，浏览器会自动地使用适当的部分作为边框的对应部分。这种技术称为九分法缩放，有助于避免在调整圆角框大小时通常会出现的失真。
+
+	.box {
+    	border-image: url(/img/corners.gif)
+        25% 25% 25% 25% / 25px round round;
+    }
+
+## 4.3 投影
 
 
 
