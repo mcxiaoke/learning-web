@@ -408,12 +408,266 @@ background属性的简写方式：
 
 ## 4.3 投影
 
+以前需要使用图像模拟，CSS3支持box-shadown属性，它可以与border-radius属性配合使用。
+
+	<div class="box">
+	</div>
+	
+	.box {
+	  box-shadow: 3px 3px 6px #666;
+	  border-radius: 6px;
+	  width: 100px;
+	  height: 100px;
+	  background-color: #eee;
+	}
+
+## 4.4 不透明度
+
+#### 1. CSS透明度
+
+CSS透明度的主要问题是，除了对背景生效之外，应用它的元素的内容也会继承它。
+
+#### 2. RGBA透明度
+
+RGBA是一种同时设置颜色和透明度的机制。A代表Alpha透明度。
+
+#### 3. PNG透明度
+
+PNG格式的图片支持Alpha透明度
+
+#### 4. CSS视差效果
 
 
 
+# 第5章 对链接应用样式
 
 
+## 5.1 简单的链接样式
 
+	a { color: red; }
+	a:link { color:blue; }
+	a:visited { color:green; }
+	a:hover, a:focus, a:active { color:red; }
+
+其它元素也可以使用:hover, :active或:focus伪类选择器。
+
+取消链接下划线示例(次序不能反了)：
+
+	a:link, a:visited { text-decoration:none; }
+	a:hover, a:focus, a:active { text-decoration:underline; }
+
+相同优先级的规则，后面的会覆盖前面的，所以，建议按如下次序定义样式：
+
+	a:link, a:visited, a:hover, a:focus, a:active
+
+## 5.2 让下划线更有趣
+
+简单的链接修饰，加粗
+
+	a:link a:visited {
+		text-decoration: none;
+		font-weight: bold;
+	}
+
+当鼠标悬停时显示下划线，增强交互状态
+
+	a:hover, a:focus, a:active {
+		text-decoration: underline;
+		font-weight: bold;
+	}
+
+为了突出显示某些链接，还可以为链接添加背景图像。
+
+## 创建类似按钮的链接
+
+	a.btn {
+	  display:block;
+	  width: 6em;
+	  line-height: 1.4;
+	  text-align: center;
+	  text-decoration: none;
+	  border: 1px solid #66a300;
+	  background-color: #8cca12;
+	  color: #fff;
+	}
+
+    <a href="#" class="btn">Book Now</a>
+
+链接现在显示为块级元素，单击块中的任何地方都会激活链接。使用line-height而不是height能让按钮文本垂直居中。链接应该只用于GET请求，不要用于POST请求。
+
+使用:hover伪类可以创建翻转效果，下面改进前面的例子，在鼠标悬停时设置链接的背景和文本颜色，实现简单的翻转(点击)效果。
+
+	a.btn:hover {
+	  background-color:#f7a300;
+	  border-color:#ff7400;
+	}
+
+对于比较复杂的按钮，你可能会想到使用背景图像。
+
+	a:link, a:visited {    	display: block;    	width: 203px;    	height: 72px;    	text-indent: -1000em;    	background: url(/img/button.png) left top no-repeat;	}
+		a:hover, a:focus { background-image: url(/img/button-over.png); }
+		a:active {		background-image: url(/img/button-active.png);	}
+
+**CSS Sprite**
+
+使用CSS精灵可以减少Web浏览器发出的服务器请求，会显著加快下载速度。另外，使用精灵把所有按钮、图标和各种图形集中在一个地方可以提高可维护性。是一种非常好的方法。
+
+还可以使用CSS3的text-shadow、box-shadow和border-radius等属性创建按钮效果。
+
+# 第6章 列表样式和导航条
+
+6.1 基本列表样式
+
+	<ul>
+		<li>Read emails</li>
+		<li>Write chapter</li>
+		<li>Go shopping</li>
+		<li>Cook dinner</li>
+		<li>Watch Lost</li>
+	</ul>
+	
+	ul {
+	  margin: 0;
+	  padding: 0;
+	  list-style-image: none;
+	}
+	
+	li {
+	  background: url(/img/bullet.gif) no-repeat 0 50%;
+	  padding-left: 30px;
+	}
+
+6.2 创建基本的垂直导航条
+
+6.3 在导航条中突出显示当前页面
+
+6.4 创建简单的水平导航条
+
+6.5 创建图形化导航条
+
+6.6 简化的标签页时导航
+
+6.7 下拉菜单
+
+6.8 CSS图像映射
+
+6.9 远距离翻转
+
+# 第7章 对表单和数据表格应用样式
+
+## 7.1 对数据表格应用样式
+
+caption一般用作表格的标题，summary属性用于表格标签，描述表格的内容，类似于图像标签的alt属性。利用thead、tbody和tfoot可以将表格划分为几个逻辑部分。一个表格只能使用一个thead和tfoot元素，但是可以使用多个tbody元素将复杂的表格划分为更容易管理的几部分。
+
+行标题和列表提应该使用th而不是td标记，但是如果某些内容既是标题又是数据，那么它仍然应该使用td。表格标题可以设置值为row或col的scope属性，定义它们是行标题还是列表提。它们还可以设置rowgroup或colgroup的值，表示它们与多行或多列相关。
+
+## 7.2 简单的表单布局
+
+第一个元素是fieldset元素。fieldset用来对相关信息块进行分组。为了识别每个fieldset的用途，可以使用legend元素。legend就像是fieldset的标题。它尝尝在fieldset的顶部垂直居中。
+
+label元素可以帮助添加结构和增加表单的可用性和可访问性。这个元素用来在每个表单元素中添加有意义的描述性标签。
+
+隐式嵌套：
+
+	<label>email <input name="email" type="text" /></label>
+
+显式嵌套
+
+	<label for="email">email</label>
+	<input name="email" id="email" type="text" />
+
+简单的表单布局：
+
+```html
+<fieldset>
+    <legend>Your Contact Details</legend>
+    <div>
+        <label for="author">Name:</label>
+        <input name="author" id="author" type="text" /> </div>
+    <div>
+        <label for="email">Email Address:</label>
+        <input name="email" id="email" type="text" />
+    </div>
+    <div>
+        <label for="url">Web Address:</label>
+        <input name="url" id="url" type="text" /> </div>
+</fieldset>
+```
+
+添加样式：
+
+```css
+fieldset {
+  margin:1em 0;
+  padding:1em;
+  border:1px solid #ccc;
+  background:#f8f8f8;
+}
+
+legend {
+  font-weight:bold;
+}
+
+label {
+  display:block;
+  cursor:pointer;
+}
+
+input {
+  width:20em;
+}
+
+input:focus {
+  background:#ffc;
+}
+```
+
+## 7.3 复杂的表单布局
+
+多列复选很复杂。
+
+
+# 第8章 布局
+
+所有CSS布局技术的根本都是这3个基本概念：定位、浮动和外边距操纵。
+
+## 8.1 计划布局
+
+首先应检查设计，寻找重复的模式，在这个阶段不应该太关注表现方式。先把页面划分为大的结构性区域，比如容器、页眉、内容区域和页脚。然后将注意力转移到内容区域本身，开始建立网格结构。最后，在各个内容区域中寻找不同的布局结构。
+
+## 8.2 设置基本结构
+
+## 8.3 基于浮动的布局
+
+### 8.3.1 两列的浮动布局
+
+### 8.3.2 三列的浮动布局
+
+## 8.4 固定宽度、流式和弹性布局
+
+### 8.4.1 流式布局
+
+在使用流式布局时，尺寸是用百分数而不是像素设置的。这使得流式布局能够相对于浏览器窗口进行伸缩。流式布局可以非常高效地利用空间。
+
+### 8.4.2 弹性布局
+
+弹性布局相对于字号来设置元素的宽度。以em为单位设置宽度，可以确保在字号增加时整个布局随之扩大。
+
+### 8.4.3 流式和弹性图像
+
+## 8.5 Faux列
+
+## 8.6 高度相等的列
+
+## 8.7 CSS3列
+
+CSS3也可以创建等高文本列，通过column-count, column-width和column-gap属性实现。
+
+## 8.8 CSS框架与CSS系统
+
+# 第9章 错误调试
+
+# 第10章 实例研究
 
 
 
